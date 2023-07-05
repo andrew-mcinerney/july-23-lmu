@@ -1,5 +1,5 @@
 ---
-title: "Combining a smooth information crietion with neural networks"
+title: "Combining a smooth information criterion with neural networks"
 author: "Andrew McInerney"
 coauthor: " "
 institution: "University of Limerick"
@@ -115,17 +115,34 @@ class: title-slide, left, bottom
 
 # Introduction
 
-```{r, echo=FALSE, out.width="40%", fig.align="center"}
+--
+
+.pull-left[
+```{r, echo=FALSE, out.width="100%", fig.align="center"}
 knitr::include_graphics(c("img/limerick-map.png"))
 ``` 
+]
 
+
+--
+
+```{r, echo=FALSE, out.width="30%", fig.align="right"}
+knitr::include_graphics(c("img/limerick-city.jpg"))
+``` 
+
+
+```{r, echo=FALSE, out.width="30%", fig.align="right"}
+knitr::include_graphics(c("img/king-johns.jpg"))
+``` 
 
 ---
 # Background
 
 --
 
-*  Ph.D. student since 2020
+```{r, echo=FALSE, out.width="60%", fig.align="center"}
+knitr::include_graphics(c("img/crt-logo.jpg"))
+``` 
 
 --
 
@@ -249,16 +266,235 @@ plot(intnn, which = 4, conf_int = TRUE, ylim = c(0, 0.5), cex.axis = 1.7,
      cex.caption = 2.5, cex.lab = 2.2)
 ```  
 ] 
+
+---
+# Current Work
+
+--
+
+<br>
+
+.pull-left[
+
+```{r, echo=FALSE, out.width="100%", fig.align="center"}
+knitr::include_graphics(c("img/kevin-meadhbh.png"))
+``` 
+
+]
+
+--
+
+
+.pull-right[
+
+```{r, echo=FALSE, out.width="100%", fig.align="center"}
+knitr::include_graphics(c("img/sic-publication.png"))
+``` 
+
+]
+
+---
+# Smooth Information Criterion
+
+$$
+ \text{IC} = -2\ell(\theta) + \lambda [\lVert \tilde\theta \rVert_0 + 1]
+$$
+
+where $\lambda =  \log(n)$ for the BIC.
+
+--
+
+Rearrange as an IC-based penalized likelihood:
+
+$$\ell^{\text{IC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} [\lVert \tilde\theta \rVert_{0} + 1]$$
+
+
+---
+# Smooth Information Criterion
+
+Introduce "smooth $L_0$ norm":
+
+
+$$\lVert \theta \rVert_{0, \epsilon} = \sum_{j=1}^p \phi_\epsilon (\theta_j)$$
+
+where
+
+$$
+ \phi_\epsilon(\theta_j) = \frac{{\theta_j^2}}{\theta_j^2 + \epsilon^2}
+$$
+
+---
+# Smooth Information Criterion
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics(c("img/smooth-l0.png"))
+``` 
+
+
+---
+# Motivation
+
+--
+
+* Tuning parameter automatically selected in one step
+
+<br>
+
+--
+
+* Computationally advantageous 
+
+
+---
+# $\epsilon$-telescoping
+
+--
+
+* Optimal $\epsilon$ is zero
+
+--
+
+* Smaller $\epsilon$ $\implies$ less numerically stable
+
+--
+
+* Start with larger $\epsilon$, and "telescope" through a decreasing sequence of $\epsilon$ values using warm starts
+
+
+---
+# Algorithm
+
+
+```{r, echo=FALSE, out.width="50%", fig.align="center"}
+knitr::include_graphics(c("img/sic-algorithm.png"))
+``` 
+
+
+---
+# Results
+
+
+```{r, echo=FALSE, out.width="50%", fig.align="center"}
+knitr::include_graphics(c("img/sic-results.png"))
+``` 
+
+
+---
+# R Package
+
+```{r, echo=FALSE, out.width="70%", fig.align="center"}
+knitr::include_graphics(c("img/smoothic.png"))
+``` 
+
+
+---
+# Extending to Neural Networks
+
+$$\mathbb{E}(y) = \text{NN}(X, \theta)$$
+
+--
+
+where
+
+$$\text{NN}(X, \theta) = \phi_o \left[ \gamma_0+\sum_{k=1}^q \gamma_k \phi_h \left( \sum_{j=0}^p \omega_{jk}x_{j}\right) \right]$$
+
+---
+# Extending to Neural Networks
+
+We can then formulate a **smooth** BIC-based penalized likelihood:
+
+--
+
+
+\begin{equation*}
+  \ell^{\text{SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} [\lVert \tilde\theta \rVert_{0, \epsilon} + q + 1],
+\end{equation*}
+
+--
+where
+\begin{equation*}
+  \ell(\theta)= -\frac{n}{2}\log(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n(y_i-\text{NN}(x_i))^2
+\end{equation*}
+
+
+---
+# Extending to Group Sparsity
+
+The smooth approximation of the $L_0$ norm can be written for groups as 
+$$
+ \phi_\epsilon(\theta^{(g)}) = \lvert \theta^{(g)} \rvert \frac{{\lVert \theta^{(g)} \rVert}_2^2}{{\lVert \theta^{(g)} \rVert}_2^2 + \epsilon^2}.
+$$
+
+
+---
+# Group Sparisty
+
+--
+
+## Input-node penalization
+
+--
+
+\begin{equation*}
+  \ell^{\text{IN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[\sum_{j=1}^{p} \lVert \omega_{j} \rVert_{0, \epsilon} + \lVert \tilde\gamma \rVert_{0, \epsilon} + q + 1\right],
+\end{equation*}
+where $\omega_{j} = (\omega_{j1},\omega_{j2},\dotsc,\omega_{jq})^T$ 
+
+
+---
+# Group Sparisty
+
+--
+
+## Hidden-node penalization
+
+--
+
+\begin{equation*}
+  \ell^{\text{HN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[\sum_{k=1}^{q} \lVert \theta^{(k)} \rVert_{0, \epsilon} + q + 1\right],
+\end{equation*}
+where $\theta^{(k)} = (\omega_{1k},\omega_{2k},\dotsc,\omega_{pk}, \gamma_k)^T$
+
+
+---
+# Combined Penalty
+
+* Implement a group penalty and the single-parameter penalty in one optimization procedure  
+
+* Start with group penalization and telescope through the $\epsilon$ values until some predefined change point, $\tau$
+
+* Switch to single-parameter penalization for the remainder of the $\epsilon$ values
+
+---
+# Approaches
+
+* Single-parameter penalization
+
+* Input-node penalization
+
+* Hidden-node penalization
+
+* Combined approaches (perform group penalization initially and then switch to single-parameter penalization)
+
+---
+# Preliminary Simulation
+
+```{r, echo=FALSE, out.width="100%", fig.align="center"}
+knitr::include_graphics(c("img/nn-sim-plot.png"))
+``` 
+
+---
+# Preliminary Results
+
+
 ---
 class: bigger
 # References
 
-*  McInerney, A., & Burke, K. (2022). A statistically-based approach to feedforward neural network model selection. arXiv preprint arXiv:2207.04248.    
-
-*  McInerney, A., & Burke, K. (2023). Interpreting feedforward neural networks as statistical models. In Preparation.    
+*  O’Neill, M. and Burke, K. (2023). Variable selection using a smooth information criterion for distributional regression models. *Statistics and Computing, 33(3), p.71*.    
 
 
-### R Package  
+### R Packages  
 
 ```{r, eval = FALSE}
 devtools::install_github(c("andrew-mcinerney/selectnn",
