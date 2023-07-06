@@ -257,6 +257,18 @@ a:visited {
   background-size:     150px;
 }
 
+.inputgroup-slide {
+  background-image:    url(../img/input-group.png);
+  background-position: 99% 1%;
+  background-size:     400px;
+}
+
+.hiddengroup-slide {
+  background-image:    url(../img/hidden-group.png);
+  background-position: 99% 1%;
+  background-size:     400px;
+}
+
 /* Two-column layout */
 .left-column {
   width: 35%;

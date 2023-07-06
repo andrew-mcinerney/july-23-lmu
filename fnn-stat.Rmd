@@ -362,24 +362,6 @@ knitr::include_graphics(c("img/smooth-l0.png"))
 
 
 ---
-# Algorithm
-
-
-```{r, echo=FALSE, out.width="50%", fig.align="center"}
-knitr::include_graphics(c("img/sic-algorithm.png"))
-``` 
-
-
----
-# Results
-
-
-```{r, echo=FALSE, out.width="50%", fig.align="center"}
-knitr::include_graphics(c("img/sic-results.png"))
-``` 
-
-
----
 # R Package
 
 ```{r, echo=FALSE, out.width="70%", fig.align="center"}
@@ -420,39 +402,57 @@ where
 ---
 # Extending to Group Sparsity
 
+--
+
 The smooth approximation of the $L_0$ norm can be written for groups as 
+<!-- $$ -->
+<!--  \phi_\epsilon(\theta^{(g)}) = \lvert \theta^{ (g) } \rvert \frac{ {\lVert \theta^{ (g) } \rVert}_2^2}{ {\lVert \theta^{ (g) } \rVert}_2^2 + \epsilon^2}. -->
+<!-- $$ -->
+
 $$
- \phi_\epsilon(\theta^{(g)}) = \lvert \theta^{ (g) } \rvert \frac{ {\lVert \theta^{ (g) } \rVert}_2^2}{ {\lVert \theta^{ (g) } \rVert}_2^2 + \epsilon^2}.
+ \text{card}(\theta) \times \phi_\epsilon(||\theta||_2^2) = \text{card}(\theta) \times \frac{||\theta||_2^2}{||\theta||_2^2 + \epsilon^2}. 
 $$
 
 
 ---
+class: inputgroup-slide
 # Group Sparisty
 
---
+## Input-neuron penalization
 
-## Input-node penalization
+<!-- \begin{equation*} -->
+<!--   \ell^{\text{IN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[\sum_{j=1}^{p} \lVert \omega_{j} \rVert_{0, \epsilon} + \lVert \tilde\gamma \rVert_{0, \epsilon} + q + 1\right], -->
+<!-- \end{equation*} -->
 
---
 
+<font size="6">
 \begin{equation*}
-  \ell^{\text{IN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[\sum_{j=1}^{p} \lVert \omega_{j} \rVert_{0, \epsilon} + \lVert \tilde\gamma \rVert_{0, \epsilon} + q + 1\right],
+  \ell^{\text{IN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[q \times \sum_{j=1}^p\big\Vert\Vert\omega_j\Vert_2^2\big\Vert_{0,\epsilon}  + \lVert \tilde\gamma \rVert_{0, \epsilon} + q + 1\right]
 \end{equation*}
+</font>
 where $\omega_{j} = (\omega_{j1},\omega_{j2},\dotsc,\omega_{jq})^T$ 
 
 
+
 ---
+class: hiddengroup-slide
 # Group Sparisty
 
---
 
-## Hidden-node penalization
 
---
+## Hidden-neuron penalization
 
+
+
+<!-- \begin{equation*} -->
+<!--   \ell^{\text{HN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[\sum_{k=1}^{q} \lVert \theta^{(k)} \rVert_{0, \epsilon} + q + 1\right], -->
+<!-- \end{equation*} -->
+
+<font size="6">
 \begin{equation*}
-  \ell^{\text{HN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[\sum_{k=1}^{q} \lVert \theta^{(k)} \rVert_{0, \epsilon} + q + 1\right],
+  \ell^{\text{HN-SIC}}(\theta) = \ell(\theta) - \frac{\log(n)}{2} \left[(p+1) \times \sum_{k=1}^q\big\Vert\Vert\theta^{(k)}\Vert_2^2\big\Vert_{0,\epsilon} + q + 1\right]
 \end{equation*}
+</font>
 where $\theta^{(k)} = (\omega_{1k},\omega_{2k},\dotsc,\omega_{pk}, \gamma_k)^T$
 
 
@@ -461,7 +461,7 @@ where $\theta^{(k)} = (\omega_{1k},\omega_{2k},\dotsc,\omega_{pk}, \gamma_k)^T$
 
 * Implement a group penalty and the single-parameter penalty in one optimization procedure  
 
-* Start with group penalization and telescope through the $\epsilon$ values until some predefined change point, $\tau$
+* Start with group penalization and telescope through the $\epsilon$ values until some predefined value, $\tau$
 
 * Switch to single-parameter penalization for the remainder of the $\epsilon$ values
 
@@ -470,9 +470,9 @@ where $\theta^{(k)} = (\omega_{1k},\omega_{2k},\dotsc,\omega_{pk}, \gamma_k)^T$
 
 * Single-parameter penalization
 
-* Input-node penalization
+* Input-neuron penalization
 
-* Hidden-node penalization
+* Hidden-neuron penalization
 
 * Combined approaches (perform group penalization initially and then switch to single-parameter penalization)
 
@@ -491,7 +491,12 @@ knitr::include_graphics(c("img/nn-sim-plot.png"))
 class: bigger
 # References
 
-*  O’Neill, M. and Burke, K. (2023). Variable selection using a smooth information criterion for distributional regression models. *Statistics and Computing, 33(3), p.71*.    
+
+*  <font size="5">McInerney, A., & Burke, K. (2022). A statistically-based approach to feedforward neural network model selection. <i>arXiv preprint arXiv:2207.04248</i>.  </font>   
+
+*  <font size="5">McInerney, A., & Burke, K. (2023). Interpreting feedforward neural networks as statistical models. <i>To appear on arXiv</i>.    </font> 
+
+*  <font size="5">O’Neill, M. and Burke, K. (2023). Variable selection using a smooth information criterion for distributional regression models. <i>Statistics and Computing, 33(3), p.71</i>.    </font> 
 
 
 ### R Packages  
