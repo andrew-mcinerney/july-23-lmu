@@ -30,7 +30,7 @@ class: title-slide, left, bottom
 
 ---
 
-# Introduction
+# Where is Limerick?
 
 --
 
@@ -46,6 +46,37 @@ class: title-slide, left, bottom
 
 &lt;img src="img/king-johns.jpg" width="30%" style="display: block; margin: auto 0 auto auto;" /&gt;
 
+
+---
+# Limerick
+
+--
+
+.pull-left[
+&lt;img src="img/hurling.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="img/colmcille.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+&lt;img src="img/dolores.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Univeristy of Limerick
+
+--
+
+.pull-left[
+&lt;img src="img/ul1.jpeg" width="100%" style="display: block; margin: auto;" /&gt;
+]
+--
+.pull-right[
+&lt;img src="img/ul2.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+]
 ---
 # Background
 
@@ -130,15 +161,15 @@ summary(intnn)
 
 ```{.bg-primary}
 ## Coefficients:
-##                                Weights |     X^2    Pr(&gt; X^2)
-##               age     (0.19, -0.41***) | 24.1009 5.84e-06 ***
-##          sex.male       (-0.25, 0.05.) |  3.6364 1.62e-01    
-##               bmi  (-26.11***, -0.03*) | 14.7542 6.25e-04 ***
-##          children     (0.16, -0.07***) | 13.1946 1.36e-03 ** 
-##        smoker.yes (63.64***, -2.83***) | 62.8237 2.28e-14 ***
-##  region.northwest       (-3.65., 0.03) |  3.4725 1.76e-01    
-##  region.southeast      (-1.95*, 0.08*) |  7.8144 2.01e-02 *  
-##  region.southwest      (-1.27, 0.12**) |  9.1267 1.04e-02 *  
+##                                Weights |      X^2    Pr(&gt; X^2)
+##               age     (-0.43***, 0.04) |  41.4363 1.01e-09 ***
+##          sex.male        (0.08*, 0.13) |   5.5055 6.38e-02 .  
+##               bmi      (0.03, 2.19***) | 105.6106 0.00e+00 ***
+##          children   (-0.08***, -0.11.) |  19.0146 7.43e-05 ***
+##        smoker.yes (-3.16***, -6.19***) | 250.6393 0.00e+00 ***
+##  region.northwest        (0.07., 0.15) |   2.8437 2.41e-01    
+##  region.southeast        (0.11*, 0.12) |   6.2560 4.38e-02 *  
+##  region.southwest       (0.15**, 0.14) |  10.8218 4.47e-03 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -156,7 +187,7 @@ plotnn(intnn)
 
 --
 
-&lt;img src="img/plotnn.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/insurance-plotnn.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -390,7 +421,11 @@ where `\(\theta^{(k)} = (\omega_{1k},\omega_{2k},\dotsc,\omega_{pk}, \gamma_k)^T
 ---
 # Preliminary Results
 
+&lt;img src="img/prelim-results.png" width="90%" style="display: block; margin: auto;" /&gt;
 
+--
+
+&lt;img src="img/prelim-results-extra.png" width="90%" style="display: block; margin: auto;" /&gt;
 ---
 class: bigger
 # References

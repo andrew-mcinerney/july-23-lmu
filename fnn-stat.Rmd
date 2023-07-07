@@ -93,7 +93,7 @@ interpretnn.default <- function(object, B = 100, ...) {
 n_init <- 10
 q <- 2 # achieves VC that is positive definite
 
-lambda <- 0.0001
+lambda <- 0.1
 
 
 inn <- nn_fit(X, y, q, n_init, maxit = 2000, lambda = lambda)
@@ -113,7 +113,7 @@ class: title-slide, left, bottom
 
 ---
 
-# Introduction
+# Where is Limerick?
 
 --
 
@@ -135,6 +135,47 @@ knitr::include_graphics(c("img/limerick-city.jpg"))
 knitr::include_graphics(c("img/king-johns.jpg"))
 ``` 
 
+
+---
+# Limerick
+
+--
+
+.pull-left[
+```{r, echo=FALSE, out.width="70%", fig.align="center"}
+knitr::include_graphics(c("img/hurling.jpg"))
+``` 
+
+```{r, echo=FALSE, out.width="40%", fig.align="center"}
+knitr::include_graphics(c("img/colmcille.png"))
+``` 
+
+]
+
+--
+
+.pull-right[
+```{r, echo=FALSE, out.width="85%", fig.align="center"}
+knitr::include_graphics(c("img/dolores.jpg"))
+``` 
+]
+
+---
+# Univeristy of Limerick
+
+--
+
+.pull-left[
+```{r, echo=FALSE, out.width="100%", fig.align="center"}
+knitr::include_graphics(c("img/ul1.jpeg"))
+``` 
+]
+--
+.pull-right[
+```{r, echo=FALSE, out.width="100%", fig.align="center"}
+knitr::include_graphics(c("img/ul2.jpg"))
+``` 
+]
 ---
 # Background
 
@@ -217,7 +258,7 @@ s[, 5] <- round(s[, 5], 4)
 cat(c(capture.output(summary(intnn))[9],
       capture.output(print(s[, c(1, 7, 4, 5, 6)], row.names = FALSE)),
       capture.output(summary(intnn))[20:21])
-    , sep = "\n")
+    , sep = "\n") 
 
 ```
 
@@ -234,7 +275,7 @@ plotnn(intnn)
 --
 
 ```{r, echo=FALSE, out.width="70%", fig.align="center"}
-knitr::include_graphics("img/plotnn.png")
+knitr::include_graphics("img/insurance-plotnn.png")
 ``` 
 
 ---
@@ -486,7 +527,15 @@ knitr::include_graphics(c("img/nn-sim-plot.png"))
 ---
 # Preliminary Results
 
+```{r, echo=FALSE, out.width="90%", fig.align="center"}
+knitr::include_graphics("img/prelim-results.png")
+``` 
 
+--
+
+```{r, echo=FALSE, out.width="90%", fig.align="center"}
+knitr::include_graphics("img/prelim-results-extra.png")
+``` 
 ---
 class: bigger
 # References
